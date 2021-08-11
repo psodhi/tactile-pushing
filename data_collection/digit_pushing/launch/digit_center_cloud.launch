@@ -1,0 +1,41 @@
+<launch>
+    <!-- a. disc pushing -->
+    <!-- <arg name="obj_shape" default ="disc" /> -->
+    <!-- <arg name="bag_name" default ="20200619_disc_6in_new_firmware" /> -->
+    <!-- <arg name="bag_name" default ="20200624_pushing-6in-disc-straight-line" /> -->
+    <!-- <arg name="bag_name" default ="20200624_pushing-6in-disc-curves" /> -->
+    <!-- <arg name="bag_name" default ="20200624_pushing-6in-disc-trial1" /> -->
+
+    <!-- b. rectangle pushing -->
+    <!-- <arg name="obj_shape" default ="rectangle" /> -->
+    <!-- <arg name="bag_name" default ="20200824_rectangle-calibration" /> -->
+    <!-- <arg name="bag_name" default ="20200824_rectangle-pushing-1" /> -->
+    <!-- <arg name="bag_name" default ="20200928_rectangle-pushing-edges" /> -->
+    <!-- <arg name="bag_name" default ="20200928_rectangle-pushing-corners" /> -->
+
+    <!-- c. ellipse pushing -->
+    <arg name="obj_shape" default ="ellipse" />
+    <arg name="bag_name" default ="20200928_ellipse-calibration" />
+    <!-- <arg name="bag_name" default ="20200928_ellipse-pushing-straight" /> -->
+    <!-- <arg name="bag_name" default ="20200928_ellipse-pushing" /> -->
+
+    <!-- bag srcdir -->
+    <arg name="srcdir_bag" default ="/home/paloma/Dropbox/fair_internship_20/datasets/digit_pushing/bags/$(arg obj_shape)" />
+
+    <!-- robot description for rviz -->
+    <param name="robot_description" textfile="$(find digit_pushing)/urdfs/$(arg obj_shape).urdf" />
+    
+    <!-- start tf broadcaster node -->
+    <param name="obj_shape" type="string" value="$(arg obj_shape)" />
+    <node pkg="digit_pushing" name="tf_broadcaster" type="TFBroadcaster.py" output="screen" />
+    
+    <!-- start center point publisher node -->
+    <param name="bag_name" type="string" value="$(arg bag_name)" />
+    <param name="dstdir_dataset" type="string" value="$(find digit_pushing)/local/datasets/$(arg bag_name)" />
+    <node pkg="digit_pushing" name="center_point_publisher" type="CenterPointPublisher.py" output="screen" />
+
+    <!-- start rosbag playback -->
+    <arg name="bagfile" default="$(arg srcdir_bag)/$(arg bag_name).bag" />
+    <node pkg="rosbag" type="play" name="player" output="screen" args="--clock --rate 0.5 --pause $(arg bagfile)"/>
+
+</launch>

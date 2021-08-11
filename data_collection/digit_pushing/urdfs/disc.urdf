@@ -1,0 +1,19 @@
+<robot name="Disc">
+    <link name="object/center/">
+        <collision>
+            <geometry>
+                <cylinder length="0.05" radius="0.088"/>
+                <!-- <cylinder length="0.05" radius="0.091"/> -->
+            </geometry>
+        </collision>
+        <visual>
+            <geometry>
+                <cylinder length="0.05" radius="0.088"/>
+                <!-- <cylinder length="0.05" radius="0.091"/> -->
+            </geometry>
+            <material name="brown">
+                <color rgba=".44 .33 .24 1.0"/>
+            </material>
+        </visual>
+    </link>
+</robot>

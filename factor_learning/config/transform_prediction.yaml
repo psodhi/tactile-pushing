@@ -1,0 +1,74 @@
+# @scripts: train_img_pair_regression.py
+
+dataset_names:
+    [
+        20200619_disc_6in_new_firmware,
+        20200624_pushing-6in-disc-curves,
+        20200624_pushing-6in-disc-trial1,
+        20200928_rectangle-pushing-edges,
+        20200928_rectangle-pushing-corners,
+        20200928_ellipse-pushing-straight,
+        20200928_ellipse-pushing
+    ]
+class_labels: [0, 0, 0, 1, 2, 3, 3]
+num_classes: 4
+
+prefix: ""
+
+random_seed: 0
+
+transforms:
+    normalize_img_inputs: False
+    norm_mean_img: [0.3730, 0.3906, 0.3820]
+    norm_std_img: [0.1057, 0.1034, 0.1585]
+
+    normalize_imgfeat_inputs: True
+
+    # keypoint feats: over rect, disc datasets
+    norm_mean_imgfeat: [0.2002, 0.6032]
+    norm_std_imgfeat: [0.0367, 0.1235]
+
+    # ellip feats: over rect, disc datasets
+    # norm_mean_imgfeat: [0.4433, 0.5461, 0.1063, 0.2795, 0.4337, 0.1007]
+    # norm_std_imgfeat: [0.2342, 0.1390, 0.0707, 0.0960, 0.8824, 0.1530]
+
+dataloader:
+    batch_size: 256
+    shuffle: True
+    num_workers: 8
+
+    downsample_imgs: True
+
+    # imgfeat_type: keypoint (dim 2), ellip (dim 6)
+    imgfeat_type: keypoint
+    imgfeat_dim: 2
+
+network:
+    # model: const, linreg, linregclass, nonlinregclass, linregfeatmap
+    model: linregclass
+
+    image_size: [320, 240]
+    tf_pred_hidden_size: 64
+
+    visualize: False
+
+train:
+    epochs: 50
+    learning_rate: 1e-3
+
+    reg_type: None
+    reg_weight: 1e-3
+    dropout: False
+    dropout_p: 0.1
+
+    weighted_mse_loss: True
+    mse_wts: [0, 0, 0, 1]
+
+    visualize: False
+    vis_interval: 5
+
+checkpoint:
+    enable_save: True
+    save_interval_epoch: 50
+    path: /checkpoint/psodhi
+    path_abs: False

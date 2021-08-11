@@ -1,0 +1,59 @@
+# @scripts: train_keypoint_detector.py
+
+# dataset_names: ["20200624_pushing-6in-disc-straight-line", "20200624_pushing-6in-disc-curves", "20200624_pushing-6in-disc-trial1"]
+dataset_names: ["20200624_pushing-6in-disc-curves"]
+# dataset_names: ["20200824_rectangle-pushing-1", "20200824_rectangle-pushing-2", "20200824_rectangle-pushing-3"]
+# dataset_names: ["20200928_rectangle-pushing-edges"]
+# dataset_names: ["20200928_rectangle-pushing-corners"]
+
+prefix: ""
+
+random_seed: 0
+
+transforms:
+  normalize_img_inputs: False
+  norm_mean_img: [0.3730, 0.3906, 0.3820]
+  norm_std_img: [0.1057, 0.1034, 0.1585]
+
+dataloader:
+  batch_size: 1
+  shuffle: True
+  num_workers: 8
+
+  downsample_imgs: True
+  use_no_contact_img: False
+
+  rgb2bgr: True
+
+keypoint_detector:
+  input_channels: 3
+  num_keypoints: 1
+  gaussian_blob_size: 0.5
+  lambda_sep: 0.02
+  sigma_sep: 0.002
+  lambda_sparse: 0
+  resnet_params:
+    layers: [2, 2, 2]
+    base_width: 24
+
+train:
+  epochs: 501
+  learning_rate: 1e-3
+
+  reg_type: None
+  reg_weight: 1e-3
+
+  validation: True
+
+  visualize: True
+  vis_interval: 5
+
+checkpoint:
+  enable_save: True
+  save_interval_epoch: 50
+  path: /checkpoint/psodhi
+  path_abs: False
+
+eval:
+  vis_scaling_factor: 3
+  model_name: 09-25-2020-16-46-46_keypoint_detector_model_epoch500

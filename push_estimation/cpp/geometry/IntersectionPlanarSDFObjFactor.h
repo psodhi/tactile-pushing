@@ -14,9 +14,9 @@
 #include <gtsam/base/numericalDerivative.h>
 #include <gtsam/geometry/Pose2.h>
 #include <gtsam/nonlinear/NonlinearFactor.h>
-#include <pushestcpp/thirdparty/gpmp2/PlanarSDF.h>
+#include <cpp/thirdparty/gpmp2/PlanarSDF.h>
 
-namespace pushestcpp {
+namespace pushest {
 
 class IntersectionPlanarSDFObjFactor : public gtsam::NoiseModelFactor1<gtsam::Pose2> {
  private:
@@ -70,6 +70,6 @@ class IntersectionPlanarSDFObjFactor : public gtsam::NoiseModelFactor1<gtsam::Po
   }
 };
 
-}  // namespace pushestcpp
+}  // namespace pushest
 
 #endif

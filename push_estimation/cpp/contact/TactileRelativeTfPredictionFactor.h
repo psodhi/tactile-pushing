@@ -21,7 +21,7 @@
 #include <iostream>
 #include <string>
 
-namespace pushestcpp {
+namespace pushest {
 
 class TactileRelativeTfPredictionFactor : public gtsam::NoiseModelFactor4<gtsam::Pose2, gtsam::Pose2, gtsam::Pose2, gtsam::Pose2> {
  private:
@@ -191,5 +191,5 @@ class TactileRelativeTfPredictionFactor : public gtsam::NoiseModelFactor4<gtsam:
   }
 };
 
-}  // namespace pushestcpp
+}  // namespace pushest
 #endif

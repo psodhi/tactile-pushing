@@ -10,11 +10,11 @@
 
 #include <gtsam/base/Matrix.h>
 #include <gtsam/geometry/Point2.h>
-#include <pushestcpp/thirdparty/gpmp2/SDFexception.h>
+#include <cpp/thirdparty/gpmp2/SDFexception.h>
 
 #include <iostream>
 
-namespace pushestcpp {
+namespace pushest {
 
 /**
  * Signed distance field use Matrix as data type
@@ -127,5 +127,5 @@ class PlanarSDF {
   }
 };
 
-}  // namespace pushestcpp
+}  // namespace pushest
 #endif

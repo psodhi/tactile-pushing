@@ -16,7 +16,7 @@
 #include <gtsam/geometry/Pose2.h>
 #include <gtsam/nonlinear/NonlinearFactor.h>
 
-namespace pushestcpp {
+namespace pushest {
 
 class QSVelPushMotionMeasurementObj {
  public:
@@ -98,6 +98,6 @@ class QSVelPushMotionObjFactor : public gtsam::NoiseModelFactor2<gtsam::Pose2, g
   }
 };
 
-}  // namespace pushestcpp
+}  // namespace pushest
 
 #endif

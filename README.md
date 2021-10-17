@@ -5,42 +5,65 @@ This repository contains the source code of the paper [Learning Tactile Models f
 
 # Installation
 
-Install the `pushestpy` python package locally. In the `push_estimation/pushestpy` dir execute:
+## Setup python environment and packages
+
+Create a virtual python environment using [Anaconda](https://www.anaconda.com/products/individual):
+```
+conda create -n pushest python=3.7
+conda activate pushest
+```
+
+Install the `pushestpy` python package. In the `push_estimation/python` dir execute:
 ```
 pip install -e .
 ```
 
-Create a virtual python environment using [Anaconda](https://www.anaconda.com/products/individual):
-```
-conda create -n env_push python=3.7
-conda activate env_push
-```
+## Install gtsam library
 
-Install [gtsam](https://github.com/borglab/gtsam). Start by cloning the gtsam repository:
+Clone [gtsam](https://github.com/borglab/gtsam) repository into a directory of your choice:
 ```
 git clone https://github.com/borglab/gtsam.git
-git checkout tags/4.0.0
+cd gtsam
+git checkout 4.1rc
 ```
 
-Build and install the gtsam library:
-```
-cmake -DGTSAM_INSTALL_CYTHON_TOOLBOX=ON -DGTSAM_PYTHON_VERSION=3.7 ..
-make -j
-make install
-```
-If doing a local install, additionally pass in the install path `-DCMAKE_INSTALL_PREFIX=../install`.
-
-Build and install the pushestcpp library for custom factors. In the `push_estimation/` dir execute:
+In the `gtsam/` dir execute:
 ```
 mkdir build/ && cd build/
+cmake -DGTSAM_BUILD_PYTHON=ON -DGTSAM_PYTHON_VERSION=3.7 ..
+make -j
+sudo make install
+
+# install python pkg to anaconda environment
+python python/setup.py install --force 
+```
+
+## Install python wrapper for custom factors
+
+In the `push_estimation/` dir execute:
+```
+cd wrap
+mkdir build && cd build
 cmake ..
 make -j
-make install
+sudo make install 
 ```
+
+## Install pushest library
+
+In the `push_estimation/` dir execute:
+```
+mkdir build/ && cd build/
+cmake .. 
+make -j
+sudo make install 
+make python-install 
+```
+
 # Usage 
 
 # Citing
-If you find this repository helpful in your publications, please cite the following:
+If you find this repository helpful in your publications, please consider citing the following:
 
 ```
 @inproceedings{sodhi2021tactile,

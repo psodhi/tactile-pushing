@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-install_requires = [line.rstrip() for line in open("requirements/requirements.txt", "r")]
+install_requires = [line.rstrip() for line in open("requirements.txt", "r")]
 
 setup(
     name="pushestpy",

@@ -14,9 +14,15 @@ virtual class gtsam::NonlinearFactor;
 virtual class gtsam::NonlinearFactorGraph;
 virtual class gtsam::NoiseModelFactor : gtsam::NonlinearFactor;
 
-namespace pushestcpp {
+namespace pushest {
 
-#include <pushestcpp/thirdparty/gpmp2/PlanarSDF.h>
+// #include <cpp/analytic/QuadraticUnaryFactor1D.h>
+// class QuadraticUnaryFactor1D: gtsam::NoiseModelFactor {
+//     QuadraticUnaryFactor1D(gtsam::Key varKey, const gtsam::Vector1 &meas, const int constraintFactorType, const gtsam::SharedNoiseModel &model = nullptr);
+//     gtsam::Vector evaluateError(const gtsam::Vector& x);
+// };
+
+#include <cpp/thirdparty/gpmp2/PlanarSDF.h>
 class PlanarSDF {
   PlanarSDF(const gtsam::Point2& origin, double cell_size, const Matrix& data);
   // access
@@ -24,7 +30,7 @@ class PlanarSDF {
   void print(string s) const;
 };
 
-#include <pushestcpp/dynamics/QSVelPushMotionRealObjEEFactor.h>
+#include <cpp/dynamics/QSVelPushMotionRealObjEEFactor.h>
 virtual class QSVelPushMotionRealObjEEFactor : gtsam::NoiseModelFactor {
   QSVelPushMotionRealObjEEFactor(size_t objKey0, size_t objKey1, size_t eeKey0, size_t eeKey1,
                                  const double& cSq, const gtsam::noiseModel::Base* noiseModel);
@@ -32,13 +38,13 @@ virtual class QSVelPushMotionRealObjEEFactor : gtsam::NoiseModelFactor {
                        const gtsam::Pose2& eePose0, const gtsam::Pose2& eePose1) const;
 };
 
-#include <pushestcpp/geometry/IntersectionPlanarSDFObjEEFactor.h>
+#include <cpp/geometry/IntersectionPlanarSDFObjEEFactor.h>
 virtual class IntersectionPlanarSDFObjEEFactor : gtsam::NoiseModelFactor {
   IntersectionPlanarSDFObjEEFactor(size_t objKey, size_t eeKey, const PlanarSDF& sdf, const double& eeRadius, const gtsam::noiseModel::Base* noiseModel);
   Vector evaluateError(const gtsam::Pose2& objPose, const gtsam::Pose2& eePose) const;
 };
 
-#include <pushestcpp/contact/TactileRelativeTfPredictionFactor.h>
+#include <cpp/contact/TactileRelativeTfPredictionFactor.h>
 virtual class TactileRelativeTfPredictionFactor : gtsam::NoiseModelFactor {
   TactileRelativeTfPredictionFactor(size_t objKey1, size_t objKey2, size_t eeKey1, size_t eeKey2,
                                     const Vector& imgFeat1, const Vector& imgFeat2, string torchModelFile,
@@ -53,4 +59,4 @@ virtual class TactileRelativeTfPredictionFactor : gtsam::NoiseModelFactor {
                                   const gtsam::Pose2& eePose1, const gtsam::Pose2& eePose2);
 };
 
-}  // namespace pushestcpp
+}  // namespace pushest

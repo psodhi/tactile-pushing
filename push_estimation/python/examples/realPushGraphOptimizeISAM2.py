@@ -12,7 +12,7 @@ import os
 import time
 import pickle as pkl
 
-import pushestcpp
+import pushest
 import gtsam
 
 from itertools import combinations, permutations, combinations_with_replacement

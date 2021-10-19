@@ -5,15 +5,13 @@ This repository contains the source code of the paper [Learning Tactile Models f
 
 # Installation
 
-## Setup python environment and packages
-
 Create a virtual python environment using [Anaconda](https://www.anaconda.com/products/individual):
 ```
 conda create -n pushest python=3.7
 conda activate pushest
 ```
 
-## Install gtsam library
+## 1. Install gtsam
 
 Clone [gtsam](https://github.com/borglab/gtsam) repository into a directory of your choice:
 ```
@@ -22,7 +20,7 @@ cd gtsam
 git checkout 4.1rc
 ```
 
-Install python requirements:
+Install gtsam python requirements:
 ```
 # an earlier pip version may be required for pybind, pip install pip==9.0.3
 pip install pyparsing pybind
@@ -35,11 +33,11 @@ cmake -DGTSAM_BUILD_PYTHON=ON -DGTSAM_PYTHON_VERSION=3.7 ..
 make -j
 sudo make install
 
-# installs python pkg to anaconda environment
+# installs gtsam python package to anaconda environment
 python python/setup.py install --force
 ```
 
-## Install python wrapper for custom factors
+## 2. Install python wrapper for custom factors
 
 In the `push_estimation/` dir execute:
 ```
@@ -50,7 +48,7 @@ make -j
 sudo make install 
 ```
 
-## Install pushest library
+## 3. Install pushest
 
 In the `push_estimation/` dir execute:
 ```

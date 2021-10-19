@@ -21,9 +21,7 @@ class QuadraticUnaryFactor1D : public gtsam::NoiseModelFactor1<gtsam::Vector> {
   gtsam::Vector evaluateError(const gtsam::Vector& x, boost::optional<gtsam::Matrix&> H = boost::none) const {
     
     // compute jacobian
-    gtsam::Matrix jac(1,1);
-    jac << 1.;
-    if (H) *H = jac;
+    if (H) *H = (gtsam::Matrix11() << 1.).finished();
 
     // compute error
     gtsam::Vector errorVector(1);
@@ -31,26 +29,6 @@ class QuadraticUnaryFactor1D : public gtsam::NoiseModelFactor1<gtsam::Vector> {
 
     return errorVector;
   }
-
-  gtsam::Vector constraintError(const gtsam::Value& val) const {
-    gtsam::Vector x = val.cast<gtsam::Vector>();
-    gtsam::Vector errorVector(1);
-    errorVector <<  (x - meas_);
-
-    return errorVector;
-  }
-
-  gtsam::Matrix constraintJacobian(const gtsam::Value& val) const {
-    
-    gtsam::Vector x = val.cast<gtsam::Vector>();
-
-    gtsam::Matrix jac(1,1);
-    jac << 1.;
-    gtsam::Matrix G = jac;
-
-    return G;
-  }
-
 };
 
 }  // namespace pushest

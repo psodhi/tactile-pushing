@@ -18,9 +18,9 @@ find_package(GTSAM REQUIRED) # Uses installed package
 # include_directories(${GTSAM_INCLUDE_DIR})
 
 # * 2. Find other packages
-set(LINUX_TORCH_PATH "/home/paloma/software/libtorch")
-find_package(Torch REQUIRED PATHS ${LINUX_TORCH_PATH} "/usr/local")
-include_directories(${TORCH_INCLUDE_DIRS})
+# set(LINUX_TORCH_PATH "/home/paloma/software/libtorch")
+# find_package(Torch REQUIRED PATHS ${LINUX_TORCH_PATH} "/usr/local")
+# include_directories(${TORCH_INCLUDE_DIRS})
 
 # ##############################################################################
 # * 3. Add the local source directory for CMake Ensure that local folder is
@@ -34,10 +34,10 @@ include_directories(BEFORE "${PROJECT_SOURCE_DIR}")
 ## sources
 set(pushest_subdirs 
     cpp/analytic
-    cpp/contact
-    cpp/dynamics
-    cpp/geometry
-    cpp/thirdparty
+    # cpp/contact
+    # cpp/dynamics
+    # cpp/geometry
+    # cpp/thirdparty
 )
 set(pushest_srcs)
 

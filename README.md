@@ -13,11 +13,6 @@ conda create -n pushest python=3.7
 conda activate pushest
 ```
 
-Install the `pushestpy` python package. In the `push_estimation/python` dir execute:
-```
-pip install -e .
-```
-
 ## Install gtsam library
 
 Clone [gtsam](https://github.com/borglab/gtsam) repository into a directory of your choice:
@@ -27,6 +22,12 @@ cd gtsam
 git checkout 4.1rc
 ```
 
+Install python requirements:
+```
+# an earlier pip version may be required for pybind, pip install pip==9.0.3
+pip install pyparsing pybind
+```
+
 In the `gtsam/` dir execute:
 ```
 mkdir build/ && cd build/
@@ -34,8 +35,8 @@ cmake -DGTSAM_BUILD_PYTHON=ON -DGTSAM_PYTHON_VERSION=3.7 ..
 make -j
 sudo make install
 
-# install python pkg to anaconda environment
-python python/setup.py install --force 
+# installs python pkg to anaconda environment
+python python/setup.py install --force
 ```
 
 ## Install python wrapper for custom factors
@@ -60,7 +61,12 @@ sudo make install
 make python-install 
 ```
 
-# Usage 
+Install the `pushestpy` python package. In the `push_estimation/python` dir execute:
+```
+pip install -e .
+```
+
+# Usage
 
 # Citing
 If you find this repository helpful in your publications, please consider citing the following:

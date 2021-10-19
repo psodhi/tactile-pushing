@@ -2,7 +2,6 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
 
 import sys
-sys.path.append("/usr/local/cython/")
 
 import hydra
 import pickle as pkl

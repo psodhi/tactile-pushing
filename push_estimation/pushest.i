@@ -16,11 +16,17 @@ virtual class gtsam::NoiseModelFactor : gtsam::NonlinearFactor;
 
 namespace pushest {
 
-// #include <cpp/analytic/QuadraticUnaryFactor1D.h>
-// class QuadraticUnaryFactor1D: gtsam::NoiseModelFactor {
-//     QuadraticUnaryFactor1D(gtsam::Key varKey, const gtsam::Vector1 &meas, const int constraintFactorType, const gtsam::SharedNoiseModel &model = nullptr);
-//     gtsam::Vector evaluateError(const gtsam::Vector& x);
-// };
+#include <cpp/analytic/QuadraticUnaryFactor1D.h>
+class QuadraticUnaryFactor1D: gtsam::NoiseModelFactor {
+    QuadraticUnaryFactor1D(gtsam::Key varKey, const gtsam::Vector1 &meas, const int constraintFactorType, const gtsam::SharedNoiseModel &model = nullptr);
+    gtsam::Vector evaluateError(const gtsam::Vector& x);
+};
+
+#include <cpp/analytic/QuadraticBinaryFactor1D.h>
+class QuadraticBinaryFactor1D: gtsam::NoiseModelFactor {
+  QuadraticBinaryFactor1D(gtsam::Key varKey1, gtsam::Key varKey2, const gtsam::Vector1 &meas, const gtsam::SharedNoiseModel &model = nullptr);
+  gtsam::Vector evaluateError(const gtsam::Vector &x1, const gtsam::Vector &x2);
+};
 
 // #include <cpp/thirdparty/gpmp2/PlanarSDF.h>
 // class PlanarSDF {

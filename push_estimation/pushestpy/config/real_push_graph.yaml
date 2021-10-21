@@ -2,11 +2,11 @@ dataio:
   srcdir_dataset: /local/datasets/real
 
   # obj_sdf_shape: disc
-  # obj_sdf_shape: rect
-  obj_sdf_shape: ellip
+  obj_sdf_shape: rect
+  # obj_sdf_shape: ellip
 
   # 0: disc, 1: rect-edges, 2: rect-corners, 3: ellip
-  class_label: 3
+  class_label: 2
 
   num_classes: 4
 
@@ -20,11 +20,11 @@ dataio:
 
   # rect datasets [*-edges-*, *-corners-*]
   # dataset_name: 20200928_rectangle-pushing-edges-test-keypoint
-  # dataset_name: 20200928_rectangle-pushing-corners-test-keypoint
+  dataset_name: 20200928_rectangle-pushing-corners-test-keypoint
 
   # ellipse datasets [*-straight-*, *-*]
   # dataset_name: 20200928_ellipse-pushing-test-keypoint
-  dataset_name: 20200928_ellipse-pushing-straight-test-keypoint
+  # dataset_name: 20200928_ellipse-pushing-straight-test-keypoint
 
   # linear [disc+rect, auto-keypoints]
   # torch_model_name: 10-19-2020-14-18-53_tf_regr_model_ser_epoch030
@@ -34,7 +34,7 @@ dataio:
   # torch_model_name: 10-25-2020-18-08-11_tf_regr_model_ser_epoch030
 
 options:
-  vis_step_flag: False
+  vis_step_flag: True
   random_seed: 0 
 
 data_process:

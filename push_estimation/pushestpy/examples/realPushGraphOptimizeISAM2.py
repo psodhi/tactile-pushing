@@ -21,7 +21,7 @@ from tqdm import tqdm
 import matplotlib.pyplot as plt
 
 import pushestpy.dataio.data_process as data_process
-import pushestpy.utils as utils
+import pushestpy.utils.utils as utils
 import pushestpy.eval.qual_visualizer as qviz
 
 from pushestpy.utils.Logger import Logger
@@ -101,7 +101,7 @@ class RealPushGraphOptimizeISAM2():
             for j in range(sdf_data_mat.shape[1]):
                 sdf_data_mat[i, j] = sdf_data_vec[i][j]
 
-        self.object_sdf = pushest.PlanarSDF(origin, cell_size, sdf_data_mat)
+        self.object_sdf = pushestcpp.PlanarSDF(origin, cell_size, sdf_data_mat)
 
     def init_optimizer(self):
         params = gtsam.ISAM2Params()
@@ -227,7 +227,7 @@ class RealPushGraphOptimizeISAM2():
     def save_logger_obj(self, prefix=''):
         logger_dir = "{0}/local/outputs/{1}/seq_{2:03d}".format(
             BASE_PATH, self.cfg.dataio.dataset_name, self.seq_idx)
-        dir_utils.make_dir(logger_dir)
+        utils.make_dir(logger_dir)
 
         logger_filename = "{0}/{1}.obj".format(logger_dir, prefix)
         f = open(logger_filename, 'wb')
@@ -299,11 +299,11 @@ class RealPushGraphOptimizeISAM2():
         elif (self.cfg.dataio.obj_sdf_shape == 'ellip'):
             c_sq = (0.5*(0.1638 + 0.2428)) ** 2
         
-        self.graph.push_back(pushest.QSVelPushMotionRealObjEEFactor(
+        self.graph.push_back(pushestcpp.QSVelPushMotionRealObjEEFactor(
             obj_key0, obj_key1, ee_key0, ee_key1, c_sq, self.qs_push_motion_noise))
 
     def add_sdf_intersection_factor(self, obj_key1, ee_key1):
-        self.graph.push_back(pushest.IntersectionPlanarSDFObjEEFactor(
+        self.graph.push_back(pushestcpp.IntersectionPlanarSDFObjEEFactor(
             obj_key1, ee_key1, self.object_sdf, self.ee_radius, self.sdf_intersection_noise))
 
     def add_tactile_rel_meas_factor(self, pose_idx, tstep):
@@ -335,7 +335,7 @@ class RealPushGraphOptimizeISAM2():
                 ee_key_i = gtsam.symbol(ord('e'), pose_idx_i)
                 ee_key_j = gtsam.symbol(ord('e'), pose_idx_j)
 
-                factor = pushest.TactileRelativeTfRegressionFactor(obj_key_i, obj_key_j, ee_key_i, ee_key_j, img_feat_i, img_feat_j,
+                factor = pushestcpp.TactileRelativeTfPredictionFactor(obj_key_i, obj_key_j, ee_key_i, ee_key_j, img_feat_i, img_feat_j,
                                                                    self.torch_model_file, self.tactile_rel_meas_noise)
                 factor.setFlags(self.cfg.factors.yaw_only_error,
                                 self.cfg.factors.constant_model)
@@ -537,17 +537,20 @@ class RealPushGraphOptimizeISAM2():
                 self.seq_idx, num_seqs, len(self.episode_idxs), self.episode_seq))
             self.push_data = data_process.transform_episodes_common_frame(
                 self.episode_seq, self.push_data_file)
-            
-            for factor_mode in [0, 1, 2, 3]:
-                try:
-                    self.set_factor_mode_config(factor_mode)
-                    self.run_episode()
-                except KeyboardInterrupt:
-                    sys.exit(0)
-                except:
-                    print(sys.exc_info()[0])
-                    self.seq_idx = self.seq_idx - 1
-                    break
+
+            self.set_factor_mode_config(1)
+            self.run_episode()
+
+            # for factor_mode in [0, 1, 2, 3]:
+                # try:
+                #     self.set_factor_mode_config(factor_mode)
+                #     self.run_episode()
+                # except KeyboardInterrupt:
+                #     sys.exit(0)
+                # except:
+                #     print(sys.exc_info()[0])
+                #     self.seq_idx = self.seq_idx - 1
+                #     break
 
             self.seq_idx = self.seq_idx + 1
             if (self.seq_idx > num_seqs):
@@ -556,7 +559,7 @@ class RealPushGraphOptimizeISAM2():
         print("Saved results for {0} sequences of {1} dataset.".format(self.seq_idx, self.cfg.dataio.dataset_name))
 
 BASE_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
-config_path = os.path.join(BASE_PATH, "python/config/real_push_graph.yaml")
+config_path = os.path.join(BASE_PATH, "pushestpy/config/real_push_graph.yaml")
 
 
 @hydra.main(config_path=config_path, strict=False)

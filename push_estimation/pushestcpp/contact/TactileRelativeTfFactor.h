@@ -77,7 +77,8 @@ class TactileRelativeTfFactor : public gtsam::NoiseModelFactor4<gtsam::Pose2, gt
       errPose = poseRelExpectYaw.between(poseRelMeasYaw);
     }
 
-    gtsam::Vector3 errVec = gtsam::Pose2::Logmap(errPose);
+    // gtsam::Vector3 errVec = gtsam::Pose2::Logmap(errPose);
+    gtsam::Vector3 errVec = gtsam::Pose2::LocalCoordinates(errPose);
 
     return errVec;
   }

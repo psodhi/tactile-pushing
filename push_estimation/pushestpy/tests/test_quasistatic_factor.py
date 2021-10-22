@@ -20,6 +20,9 @@ class TestQuasiStaticFactor(unittest.TestCase):
         gtsam.symbol(ord('e'), 0), gtsam.symbol(ord('e'), 1),
         c_sq, noise_model)
 
+    def print(self, expected, actual):
+        print(f"Expected: {expected}, Actual: {actual}")
+
     def test_error_qs_1(self):
         obj_pose_0 = gtsam.Pose2(0., 0., 0.)
         obj_pose_1 = gtsam.Pose2(0., 0., 0.)
@@ -29,6 +32,7 @@ class TestQuasiStaticFactor(unittest.TestCase):
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
         expected = np.array([0., 0., 0.])
 
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
     def test_error_qs_2(self):
@@ -40,6 +44,7 @@ class TestQuasiStaticFactor(unittest.TestCase):
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
         expected = np.array([0., 0., -1.57079633])
 
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
     def test_error_qs_3(self):
@@ -51,6 +56,7 @@ class TestQuasiStaticFactor(unittest.TestCase):
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
         expected = np.array([0., 0., -0.78539816])
 
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
     def test_error_qs_4(self):
@@ -62,6 +68,7 @@ class TestQuasiStaticFactor(unittest.TestCase):
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
         expected = np.array([0., 2.22144147, -0.785398163])
         
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
     def test_error_qs_5(self):
@@ -73,6 +80,7 @@ class TestQuasiStaticFactor(unittest.TestCase):
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
         expected = np.array([2.71238898, -6.71238898, 1.57079633])
     
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
 if __name__ == '__main__':

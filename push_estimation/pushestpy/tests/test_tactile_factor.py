@@ -25,6 +25,9 @@ class TestTactileRelativeFactor(unittest.TestCase):
     factor = pushestcpp.TactileRelativeTfFactor(gtsam.symbol(ord('o'), 0), gtsam.symbol(ord('o'), 1), 
                 gtsam.symbol(ord('e'), 0), gtsam.symbol(ord('e'), 1), tf_model_pred, noise_model)
 
+    def print(self, expected, actual):
+        print(f"Expected: {expected}, Actual: {actual}")
+
     def test_error_tactile_1(self):
         obj_pose_0 = gtsam.Pose2(0., 0., 0.)
         obj_pose_1 = gtsam.Pose2(0., 0., 0.)
@@ -34,6 +37,7 @@ class TestTactileRelativeFactor(unittest.TestCase):
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
         expected = np.array([0., 0., 0.52359878])
 
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
     def test_error_tactile_2(self):
@@ -45,6 +49,7 @@ class TestTactileRelativeFactor(unittest.TestCase):
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
         expected = np.array([0., 0., 0.52359878])
 
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
     def test_error_tactile_3(self):
@@ -56,6 +61,7 @@ class TestTactileRelativeFactor(unittest.TestCase):
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
         expected = np.array([0.66650618, 0.86860776, 0.52359878])
 
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
     def test_error_tactile_4(self):
@@ -65,8 +71,11 @@ class TestTactileRelativeFactor(unittest.TestCase):
         ee_pose_1 = gtsam.Pose2(3., 3., np.pi/2)
 
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
-        expected = np.array([1.33301235, 1.73721552, 0.52359878])
                 
+        # expected = np.array([0.82842712, 2., 0.52359878]) 
+        expected = np.array([1.33301235, 1.73721552, 0.52359878]) # SLOW_BUT_CORRECT_EXPMAP
+
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
     def test_error_tactile_5(self):
@@ -76,8 +85,11 @@ class TestTactileRelativeFactor(unittest.TestCase):
         ee_pose_1 = gtsam.Pose2(3., 3., np.pi/2)
 
         actual = self.factor.evaluateError(obj_pose_0, obj_pose_1, ee_pose_0, ee_pose_1)
-        expected = np.array([-4.64499601, -2.25899128, -1.83259571])
+        
+        # expected = np.array([-4., 2., -1.83259571])
+        expected = np.array([-4.64499601, -2.25899128, -1.83259571]) # SLOW_BUT_CORRECT_EXPMAP
 
+        self.print(expected, actual)
         self.assertEqual(np.allclose(actual, expected, atol=1e-6), True)
 
 if __name__ == '__main__':

@@ -53,4 +53,17 @@ virtual class TactileRelativeTfPredictionFactor : gtsam::NoiseModelFactor {
                                   const gtsam::Pose2& eePose1, const gtsam::Pose2& eePose2);
 };
 
+#include <pushestcpp/contact/TactileRelativeTfFactor.h>
+virtual class TactileRelativeTfFactor : gtsam::NoiseModelFactor {
+  TactileRelativeTfFactor(size_t objKey1, size_t objKey2, size_t eeKey1, size_t eeKey2,
+                                    const Vector& torchModelOutput, const gtsam::noiseModel::Base* noiseModel);
+  Vector evaluateError(const gtsam::Pose2& objPose1, const gtsam::Pose2& objPose2,
+                       const gtsam::Pose2& eePose1, const gtsam::Pose2& eePose2) const;
+  void setFlags(const bool yawOnlyError,const bool constantModel);
+  void setOracle(const bool oracleFactor, const gtsam::Pose2 oraclePose);
+  void setLabel(int classLabel, int numClasses);
+  gtsam::Pose2 getExpectTransform(const gtsam::Pose2& objPose1, const gtsam::Pose2& objPose2,
+                                  const gtsam::Pose2& eePose1, const gtsam::Pose2& eePose2);
+};
+
 }  // namespace pushestcpp
